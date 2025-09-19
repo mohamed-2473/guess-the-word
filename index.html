@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The Word - Enhanced Edition</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Enhanced Background -->
+    <div class="enhanced-background">
+        <div class="floating-sphere sphere-1"></div>
+        <div class="floating-sphere sphere-2"></div>
+        <div class="floating-sphere sphere-3"></div>
+        <div class="particles" id="particles"></div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="game-container">
+            <!-- Header -->
+            <div class="game-header" data-aos="fade-down">
+                <h1 class="game-title">
+                    <i class="fas fa-puzzle-piece me-3"></i>
+                    Guess The Word
+                </h1>
+                <p class="game-subtitle">Enhanced Edition with Animations & Bootstrap</p>
+            </div>
+
+            <!-- Stats Panel -->
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8">
+                    <div class="stats-panel" data-aos="fade-up">
+                        <div class="row">
+                            <div class="col-3 stat-item">
+                                <div class="stat-number" id="currentTryDisplay">1</div>
+                                <div class="stat-label">Current Try</div>
+                            </div>
+                            <div class="col-3 stat-item">
+                                <div class="stat-number" id="hintsLeft">2</div>
+                                <div class="stat-label">Hints Left</div>
+                            </div>
+                            <div class="col-3 stat-item">
+                                <div class="stat-number" id="lettersGuessed">0</div>
+                                <div class="stat-label">Letters Found</div>
+                            </div>
+                            <div class="col-3 stat-item">
+                                <div class="stat-number" id="gameTimer">00:00</div>
+                                <div class="stat-label">Time</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="progress-container" data-aos="fade-up">
+                        <div class="progress">
+                            <div class="progress-bar" id="gameProgress" style="width: 16.67%"></div>
+                        </div>
+                        <small class="text-muted d-block text-center mt-2">Game Progress</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rules Panel -->
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8">
+                    <div class="rules-panel" data-aos="fade-up" data-aos-delay="100">
+                        <h5><i class="fas fa-info-circle me-2"></i>How to Play</h5>
+                        <p class="mb-2">Guess the 6-letter word in 6 tries! Each guess must be a valid word.</p>
+                        <div class="color-guide">
+                            <div class="color-item">
+                                <div class="color-box correct"></div>
+                                <span>Correct letter in right position</span>
+                            </div>
+                            <div class="color-item">
+                                <div class="color-box wrong-position"></div>
+                                <span>Correct letter in wrong position</span>
+                            </div>
+                            <div class="color-item">
+                                <div class="color-box not-in-word"></div>
+                                <span>Letter not in the word</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Board -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="game-board" data-aos="fade-up" data-aos-delay="200">
+                        <div id="gameBoard">
+                            <!-- Game rows will be generated by JavaScript -->
+                        </div>
+
+                        <!-- Game Controls -->
+                        <div class="game-controls mt-4">
+                            <button class="btn btn-game" id="checkBtn">
+                                <i class="fas fa-check me-2"></i>Check Word
+                            </button>
+                            <button class="btn btn-game btn-hint" id="hintBtn">
+                                <i class="fas fa-lightbulb me-2"></i>Get Hint
+                            </button>
+                            <button class="btn btn-game" id="newGameBtn"
+                                style="background: linear-gradient(135deg, #28a745, #20c997);">
+                                <i class="fas fa-redo me-2"></i>New Game
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Virtual Keyboard -->
+            <div class="row justify-content-center mt-4">
+                <div class="col-lg-8">
+                    <div class="virtual-keyboard" data-aos="fade-up" data-aos-delay="300">
+                        <div class="keyboard-row">
+                            <button class="key-btn" data-key="Q">Q</button>
+                            <button class="key-btn" data-key="W">W</button>
+                            <button class="key-btn" data-key="E">E</button>
+                            <button class="key-btn" data-key="R">R</button>
+                            <button class="key-btn" data-key="T">T</button>
+                            <button class="key-btn" data-key="Y">Y</button>
+                            <button class="key-btn" data-key="U">U</button>
+                            <button class="key-btn" data-key="I">I</button>
+                            <button class="key-btn" data-key="O">O</button>
+                            <button class="key-btn" data-key="P">P</button>
+                        </div>
+                        <div class="keyboard-row">
+                            <button class="key-btn" data-key="A">A</button>
+                            <button class="key-btn" data-key="S">S</button>
+                            <button class="key-btn" data-key="D">D</button>
+                            <button class="key-btn" data-key="F">F</button>
+                            <button class="key-btn" data-key="G">G</button>
+                            <button class="key-btn" data-key="H">H</button>
+                            <button class="key-btn" data-key="J">J</button>
+                            <button class="key-btn" data-key="K">K</button>
+                            <button class="key-btn" data-key="L">L</button>
+                        </div>
+                        <div class="keyboard-row">
+                            <button class="key-btn" data-key="Z">Z</button>
+                            <button class="key-btn" data-key="X">X</button>
+                            <button class="key-btn" data-key="C">C</button>
+                            <button class="key-btn" data-key="V">V</button>
+                            <button class="key-btn" data-key="B">B</button>
+                            <button class="key-btn" data-key="N">N</button>
+                            <button class="key-btn" data-key="M">M</button>
+                            <button class="key-btn" data-key="BACKSPACE" style="min-width: 80px;">
+                                <i class="fas fa-backspace"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+
+</html>
